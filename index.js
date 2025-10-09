@@ -26,7 +26,7 @@ app.post("/data", async (req, res) => {
       timestamp: new Date(),
     };
 
-    await collection.insertOne(leitura);
+    await collection.insertOne(readings);
     res.status(200).send(" Dados recebidos e salvos com sucesso!");
   } catch (err) {
     console.error("Erro ao salvar no MongoDB:", err);
