@@ -1,5 +1,5 @@
 {
-  "name": "iot-api",
+  "name": "iot-api-render",
   "version": "1.0.0",
   "description": "API IoT para receber dados do ESP32 e salvar no MongoDB Atlas",
   "main": "index.js",
