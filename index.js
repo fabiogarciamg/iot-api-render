@@ -7,12 +7,13 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// String de conexão do MongoDB Atlas
+// =============================
+// Configuração do MongoDB Atlas
+// =============================
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
-
-// Conecta ao MongoDB uma vez no início
 let collection;
+
 async function conectarMongo() {
   try {
     await client.connect();
@@ -36,16 +37,21 @@ app.post("/data", async (req, res) => {
       timestamp: new Date(),
     };
 
-    await collection.insertOne(leitura); // ✅ variável correta
+    await collection.insertOne(leitura);
+    console.log("📥 Nova leitura recebida:", leitura);
     res.status(200).send("✅ Dados recebidos e salvos com sucesso!");
   } catch (err) {
-    console.error("Erro ao salvar no MongoDB:", err);
+    console.error("❌ Erro ao salvar no MongoDB:", err);
     res.status(500).send("❌ Erro ao salvar no banco de dados");
   }
 });
 
 // =============================
-// Inicializa o servidor
+// Inicializa o servidor (Render)
 // =============================
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 API IoT rodando na porta ${PORT}`));
+
+// ⚠️ Importante: "0.0.0.0" permite conexões externas (necessário no Render)
+app.listen(PORT, "0.0.0.0", () =>
+  console.log(`🚀 API IoT rodando na porta ${PORT}`)
+);
