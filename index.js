@@ -17,7 +17,7 @@ let collection;
 async function conectarMongo() {
   try {
     await client.connect();
-    const db = client.db("bd_iot_monitoring");
+    const db = client.db("bd_iot_monitoring2");
     collection = db.collection("readings");
     console.log("✅ Conectado ao MongoDB Atlas");
   } catch (err) {
