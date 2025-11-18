@@ -28,17 +28,24 @@ conectarMongo();
 
 // =============================
 // Rota principal /data
+// Nova estrutura (um dispositivo por POST)
 // =============================
 app.post("/data", async (req, res) => {
   try {
+    // Monta o documento compatível com a collection 'readings'
     const leitura = {
       location_id: req.body.location_id,
-      devices: req.body.devices,
+      device_id: req.body.device_id,
       timestamp: new Date(),
+      readings: req.body.readings,
+      alerts: req.body.alerts
     };
 
+    // Salva no banco
     await collection.insertOne(leitura);
+
     console.log("📥 Nova leitura recebida:", leitura);
+
     res.status(200).send("✅ Dados recebidos e salvos com sucesso!");
   } catch (err) {
     console.error("❌ Erro ao salvar no MongoDB:", err);
